@@ -1,2 +1,2 @@
 # snippets
-bunch of tiny examples for libs/frameworks
+bunch of tiny codes that can either help bootstrap work or assist debugging
