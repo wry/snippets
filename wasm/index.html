@@ -1,0 +1,54 @@
+<!-- a minimal html file to load wasm code -->
+<html>
+<body>
+<div class="emscripten" id="output" rows="20">
+</div>
+<script type='text/javascript'>
+var Module = {
+    preRun: (function() {
+        console.log("initializing..");
+    })(),
+    postRun: (function() {
+        console.log("initialization done.");
+    })(),
+    print: (function() {
+        var output = document.getElementById('output');
+        return function(text) {
+            text = text.replace(/&/g, "&amp;");
+            text = text.replace(/</g, "&lt;");
+            text = text.replace(/>/g, "&gt;");
+            text = text.replace('\n', '<br>', 'g');
+            output.innerHTML += text + '<br>';
+      };
+    })(),
+    printErr: (function() {
+        var output = document.getElementById('output');
+        return function(text) {
+            output.innerHTML += text.replace('\n', '<br>', 'g') + '<br>';
+        };
+    })(),
+};
+</script>
+<script>
+   var Module = Module || {
+     wasmBinaryFile: 'main.wasm'
+   }
+ 
+   var xhr = new XMLHttpRequest()
+   xhr.open('GET', 'main.wasm', true)
+   xhr.responseType = 'arraybuffer'
+ 
+   xhr.onload = function() {
+ 
+     Module.wasmBinary = xhr.response
+ 
+     var script = document.createElement('script')
+     script.src = "main.js"
+     document.body.appendChild(script)
+   }
+ 
+   xhr.send(null)
+</script>
+<!--<script async type="text/javascript" src="main.js"></script>-->
+</body>
+</html>
