@@ -54,7 +54,7 @@ static void wrChar(Image *img, Vec2 * pos, uint8_t asc)
 
 static void wrImg(Image *img, int fd)
 {
-    write(1, ((void *)img->pixels), img->width*img->height*sizeof(Vec4));
+    write(fd, (void *)img->pixels, img->width*img->height*sizeof(Vec4));
 }
 
 static void wrTxt(Image *img, Vec2 *pos, const char *txt)
