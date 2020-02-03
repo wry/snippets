@@ -1,0 +1,45 @@
+// => to install the lib
+//
+// run the 'install' or 'uploadArchives' task (note: installs in ~/.m2/repository/com/example/)
+//
+// => to use, add these to the project build.gradle
+//
+// buildscript {
+//    repositories {
+//        mavenLocal()
+//    }
+//    dependencies {
+//        classpath 'com.example.instrlib:instrlib:1.0'
+//    }
+// }
+
+// => then apply the plugin in the app build.gradle
+//
+// apply plugin: 'com.example.instrlib'
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+group 'com.example.instrlib'
+version '1.0'
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:transform-api:1.5.0'
+    implementation 'org.ow2.asm:asm:5.0.3'
+    implementation 'org.ow2.asm:asm-commons:5.0.3'
+    implementation 'commons-io:commons-io:2.0.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: mavenLocal().getUrl())
+        }
+    }
+}
