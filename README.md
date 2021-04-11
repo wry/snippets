@@ -1,2 +1,2 @@
 # snippets
-bunch of tiny codes that can either help bootstrap work or assist debugging
+bunch of tiny code that can either help bootstrap work, assist debugging or need no separate repo
