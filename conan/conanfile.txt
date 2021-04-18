@@ -1,11 +1,14 @@
 # conan install ..
-# conan install --build=missing ..
+# conan install .. --build=missing
+# conan install .. --build=missing --profile:host=../profiles/ios --profile:build=default
+# conan install .. --build=missing --profile:host=../profiles/android --profile:build=default
 
 [requires]
 libcurl/7.75.0
 
 [generators]
 cmake_find_package
+CMakeToolchain
 
 [options]
 libcurl:with_openssl=True
