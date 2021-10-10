@@ -1,6 +1,6 @@
 ODIR := obj
 CCFLAGS += -Os -nostdlib -ffreestanding
-LDFLAGS += -e _start
+LDFLAGS += -e _start -L`xcode-select -p`/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib -lSystem
 
 all: $(ODIR)/vidgen
 
