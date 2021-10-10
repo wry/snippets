@@ -1,5 +1,5 @@
 ODIR := obj
-CCFLAGS += -Os -nostdlib -ffreestanding
+CCFLAGS += -O0 -nostdlib -ffreestanding
 LDFLAGS += -e _start -static
 
 all: $(ODIR)/vidgen
