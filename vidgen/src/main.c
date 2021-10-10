@@ -102,7 +102,6 @@ void start(void)
     float col2[3];
 
     unsigned char coli[3];
-    coli[0] = coli[1] = coli[2] = 0;
 
     for (int y=0; y < h; y++)
     {
