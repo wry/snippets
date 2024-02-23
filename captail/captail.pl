@@ -1,4 +1,4 @@
-#!env perl
+#!/usr/bin/env perl
 
 # extract bytes from a tcpdump packet capture stream (for code or for further processing)
 # use : tcpdump -X -v ... | $0 [0|1]
