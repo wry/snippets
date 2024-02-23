@@ -1,2 +1,2 @@
 # geninc
-generate include file to be used in a C/C++ project
+generate include file from binary data to be used in a C/C++ project
