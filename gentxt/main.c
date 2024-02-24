@@ -35,7 +35,7 @@ static const uint32_t hbit = 1<<(8-1);
 
 static void wrChar(Image *img, Vec2 * pos, uint8_t asc)
 {
-    const size_t a_idx = 8*(asc-0x20);
+    const size_t a_idx = 8*asc;
     uint8_t tmp_b = 0;
     size_t off = 0;
 
