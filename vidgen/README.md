@@ -1,2 +1,2 @@
 # vidgen
-a tiny libcless animation using ffmpeg as its gui
+a tiny nostdlib animation using ffmpeg as its gui

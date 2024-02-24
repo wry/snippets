@@ -14,7 +14,7 @@ to get fonts primitive enough to rasterize i chose the simtel dos font blobs, wh
 
 ## use
 
-* get the fntcol16.zip package, eg. [mirror](https://ftp.sunet.se/mirror/archive/ftp.sunet.se/pub/simtelnet/msdos/screen/fntcol16.zip))
+* get the fntcol16.zip package, eg. [mirror](https://ftp.sunet.se/mirror/archive/ftp.sunet.se/pub/simtelnet/msdos/screen/fntcol16.zip)
 * get a font blob, eg. `unzip -p fntcol16.zip VGA-ROM.F08 | perl -ne '$hex = unpack "H*"; print join(",", map{"0x$_"} ($hex=~m/../g))."\n";' > font.i`
 * build the prog with `make`
 * display the text using ffmpeg, eg. `./gentxt 'hello world!' | ffplay -f rawvideo -pixel_format rgba -video_size 300x300 -`

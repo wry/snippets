@@ -5,55 +5,100 @@
 // vlc udp://@:23000
 // ./vidgen | ffplay -i pipe:0
 
+#if !defined(__APPLE__) || !defined(__MACH__)
+#error "The only supported platform for now is macos"
+#endif /* !defined(__APPLE__) || !defined(__MACH__) */
+
 #define PI 3.14159265359
 
 static int write(int fd, const void * buf, unsigned long buflen)
 {
   int ret;
+#if defined(__x86_64__)
   asm volatile (
     "movq $0x02000004, %%rax\n" // 4
     "syscall\n"
     : "=a" (ret)
-    : "D" (fd), "S" (buf), "d" (buflen));
+    : "D" (fd), "S" (buf), "d" (buflen)
+  );
+#elif defined(__aarch64__)
+  asm volatile (
+    "mov x16, #4\n"
+    "svc #0\n"
+    : "=r" (ret)
+    : "r" (fd), "r" (buf), "r" (buflen)
+  );
+#endif
   return ret;
 }
 
 static float fsin(float r)
 {
   float ret;
-  asm ("fsin" : "=t" (ret) : "0" (r));
+#if defined(__x86_64__)
+  asm (
+    "fsin"
+    : "=t" (ret)
+    : "0" (r)
+  );
+#elif defined(__aarch64__)
+#endif
   return ret;
 }
 
 static float fcos(float r)
 {
   float ret;
-  asm ("fcos" : "=t" (ret) : "0" (r));
+#if defined(__x86_64__)
+  asm (
+    "fcos"
+    : "=t" (ret)
+    : "0" (r)
+  );
+#elif defined(__aarch64__)
+#endif
   return ret;
 }
 
 static float fsqrt(float v)
 {
   float ret;
-  asm ("fsqrt" : "=t" (ret) : "0" (v));
+#if defined(__x86_64__)
+  asm (
+    "fsqrt"
+    : "=t" (ret)
+    : "0" (v)
+  );
+#elif defined(__aarch64__)
+#endif
   return ret;
 }
 
 static float fabs(float v)
 {
   float ret;
-  asm ("fabs" : "=t" (ret) : "0" (v));
+#if defined(__x86_64__)
+  asm (
+    "fabs"
+    : "=t" (ret)
+    : "0" (v)
+  );
+#elif defined(__aarch64__)
+#endif
   return ret;
 }
 
 static double fpatan(float y, float x)
 { 
   float ret; 
+#if defined(__x86_64__)
   asm (
-     "fpatan" 
-     : "=t" (ret)
-     : "0" (x), "u" (y)
-     );   
+    "fpatan" 
+    : "=t" (ret)
+    : "0" (x), "u" (y)
+  );   
+#elif defined(__aarch64__)
+#endif
   return ret; 
 }
 
@@ -88,12 +133,10 @@ void start(void)
 
   float t, r, uv[2];
 
+  write(1, "YUV4MPEG2 W256 H256 F30:1 Ip A0:0 C444 XYSCSS=444\n", 50);
+
   while (1)
   {
-    if (f == 0)
-    {
-      write(1, "YUV4MPEG2 W256 H256 F30:1 Ip A0:0 C444 XYSCSS=444\n", 50);
-    }
     write(1, "FRAME\n", 6);
 
     t = (float)f / 30.0f;

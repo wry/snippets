@@ -1,6 +1,13 @@
 ODIR := obj
 CCFLAGS += -O0 -nostdlib -ffreestanding
-LDFLAGS += -e _start -static
+
+ifeq ($(shell uname -m),arm64)
+  # on M1 if libSystem isn't linked, it will crash on launch
+  LDFLAGS += -e _start -L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib -lSystem
+else
+  # x86
+  LDFLAGS += -e _start -static
+endif
 
 all: $(ODIR)/vidgen
 
