@@ -5,8 +5,8 @@
 // vlc udp://@:23000
 // ./vidgen | ffplay -i pipe:0
 
-#if !defined(__APPLE__) || !defined(__MACH__)
-#error "The only supported platform for now is macos"
+#if !defined(__APPLE__) && !defined(__linux__)
+#error "The only supported platforms for now are macos & linux"
 #endif /* !defined(__APPLE__) || !defined(__MACH__) */
 
 #ifdef __aarch64__
@@ -22,14 +22,22 @@ static int vg_write(int fd, const void * buf, unsigned long buflen)
   int ret;
 #if defined(__x86_64__)
   asm volatile (
+#if defined(__APPLE__) || defined(__MACH__)
     "movq $0x02000004, %%rax\n" // 4
+#else
+    "movq $1, %%rax\n" // 1
+#endif
     "syscall\n"
     : "=a" (ret)
     : "D" (fd), "S" (buf), "d" (buflen)
   );
 #elif defined(__aarch64__)
   asm volatile (
+#if defined(__APPLE__) || defined(__MACH__)
     "mov x16, #4\n"
+#else
+    "mov x8, #64\n"
+#endif
     "svc #0\n"
     : "=r" (ret)
     : "r" (fd), "r" (buf), "r" (buflen)

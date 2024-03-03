@@ -1,4 +1,15 @@
 # vidgen
-a tiny macos nostdlib animation backed by x87 asm, using ffplay as its display
+a tiny nostdlib animation backed by x87 asm, using ffplay as its display
 
-(on arm64 it will run but uses libm)
+## compatibility
+
+### macos
+
+* x86 - runs as intended
+* arm64 - uses libm
+
+### linux
+
+* x86 - untested
+* aarch64 - uses libm
+
