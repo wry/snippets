@@ -1,3 +1,13 @@
 # pipeye
-an eye on a pipe.. yes i know, sad name, but i couldn't come up with a better one;
-originally was meant to nuke mediaserver each time media playback died on a box (the buggy codec dumped some outlandish message each time this happened, so it was easy to know).
+
+a tool to execute a command if a message matches the provided regex
+
+# use
+
+```shell
+pipeye <cmd> <regex> <exec>
+```
+
+* cmd - the command we'll observe the output of
+* regex - the regex to match the message
+* exec - the command to execute
