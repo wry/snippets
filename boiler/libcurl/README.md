@@ -1,2 +1,3 @@
 # libcurl
-a libcurl example that uses the easy calls, maybe useful to get someone off the ground
+
+a libcurl example that uses the easy calls, to serve as boiler plate
