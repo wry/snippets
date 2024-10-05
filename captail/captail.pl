@@ -21,20 +21,25 @@
 #  SOFTWARE.
 
 # extract bytes from a tcpdump packet capture stream
-# use : tcpdump -X -v ... | $0 [0|1|2]
+# use : tcpdump -X -v -tt ... | $0 [0|1|2] [0|1]
 
 use strict;
 use warnings;
 
 my $argFmt = $ARGV[0] || 0;
+my $argTS = $ARGV[1] || 0;
 
 my $buf = "";
 my $buflen = -1;
+my $ts = "";
 while(<STDIN>) {
   my $tmpbuf;
-  if ($_=~/^\d\d:\d\d:\d\d.+length\s(\d+).*$/) {
+  if ($_=~/^([\d\.]+)\s.+length\s(\d+).*$/) {
     $buf = "";
-    $buflen = $1;
+    $buflen = $2;
+    if ($1 =~ /(\d+)\.(\d{6})$/) {
+      $ts = $1 . $2;
+    }
   }
   elsif ($_=~/^\s+0x[0-9a-f]{4}:(.+)\s\s.+/) {
     $tmpbuf = $1;
@@ -46,6 +51,9 @@ while(<STDIN>) {
   }
 
   if (length($buf) == $buflen*2) {
+    if ($argTS == 1) {
+      print "$ts|"
+    }
     if ($argFmt == 1) {
       print join(",", map{"0x".$_} ($buf=~m/../g))."\n";
     }
